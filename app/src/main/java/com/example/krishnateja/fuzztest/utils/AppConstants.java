@@ -23,8 +23,8 @@ public class AppConstants {
 
     public static class FLAGS {
 
-        public static final int TEXT_FLAG =0;
-        public static final int IMAGE_FLAG =1;
+        public static final int TEXT_FLAG =1;
+        public static final int IMAGE_FLAG =2;
         public static final int ALL_FLAG=0;
     }
 }

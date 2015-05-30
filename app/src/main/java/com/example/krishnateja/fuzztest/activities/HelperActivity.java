@@ -191,6 +191,8 @@ public class HelperActivity extends AppCompatActivity implements DataAysncTask.S
                         e.printStackTrace();
                     }
                 }
+            }else{
+                imageClass.getDataModel().setPath(null);
             }
             mImagesDataModelArrayList.add(imageClass.getDataModel());
             if (mTotalCount == mImagesDataModelArrayList.size() + mTextDataModelArrayList.size()) {

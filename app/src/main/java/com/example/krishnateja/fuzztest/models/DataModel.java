@@ -12,8 +12,8 @@ public class DataModel implements Parcelable {
     public DataModel(Parcel source) {
         id=source.readString();
         type=source.readString();
-        date=source.readString();
         data=source.readString();
+        date=source.readString();
         path=source.readString();
     }
 

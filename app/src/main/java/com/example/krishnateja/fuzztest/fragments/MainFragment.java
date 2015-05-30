@@ -35,29 +35,41 @@ public class MainFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_main, container, false);
-        Bundle bundle = getArguments();
-        mDataFlag = bundle.getInt(AppConstants.BundleExtras.DATA_FLAG);
-        if (mDataFlag == AppConstants.FLAGS.TEXT_FLAG) {
+        if (savedInstanceState == null) {
+            Bundle bundle = getArguments();
             mTextDataModelArrayList = bundle.getParcelableArrayList(AppConstants.BundleExtras.TEXT);
-            setUpTextRecyclerView();
-        } else if (mDataFlag == AppConstants.FLAGS.IMAGE_FLAG) {
             mImagesDataModelArrayList = bundle.getParcelableArrayList(AppConstants.BundleExtras.IMAGE);
+
+        } else {
+            mImagesDataModelArrayList = savedInstanceState.getParcelableArrayList(AppConstants.BundleExtras.IMAGE);
+            mTextDataModelArrayList = savedInstanceState.getParcelableArrayList(AppConstants.BundleExtras.TEXT);
+        }
+        if (mTextDataModelArrayList == null) {
             setUpImageRecyclerView();
+        } else {
+            setUpRecyclerView();
         }
         return mView;
 
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putParcelableArrayList(AppConstants.BundleExtras.TEXT, mTextDataModelArrayList);
+        outState.putParcelableArrayList(AppConstants.BundleExtras.IMAGE, mImagesDataModelArrayList);
+        super.onSaveInstanceState(outState);
+    }
+
     private void setUpImageRecyclerView() {
-        MainRecyclerViewAdapter mainRecyclerViewAdapter = new MainRecyclerViewAdapter(getActivity(), mDataFlag, mImagesDataModelArrayList);
+        MainRecyclerViewAdapter mainRecyclerViewAdapter = new MainRecyclerViewAdapter(getActivity(), mDataFlag, mImagesDataModelArrayList, mTextDataModelArrayList);
         RecyclerView recyclerView = (RecyclerView) mView.findViewById(R.id.fragment_main_recycle_view);
-        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(),3));
+        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
         recyclerView.setAdapter(mainRecyclerViewAdapter);
 
     }
 
-    private void setUpTextRecyclerView() {
-        MainRecyclerViewAdapter mainRecyclerViewAdapter = new MainRecyclerViewAdapter(getActivity(), mDataFlag, mTextDataModelArrayList);
+    private void setUpRecyclerView() {
+        MainRecyclerViewAdapter mainRecyclerViewAdapter = new MainRecyclerViewAdapter(getActivity(), mDataFlag, mImagesDataModelArrayList, mTextDataModelArrayList);
         RecyclerView recyclerView = (RecyclerView) mView.findViewById(R.id.fragment_main_recycle_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.addItemDecoration(new MainRecyclerViewDecorator(getActivity()));
