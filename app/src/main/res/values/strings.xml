@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">FuzzTest</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="web_view">WebView</string>
+    <string name="image">Image</string>
+</resources>
